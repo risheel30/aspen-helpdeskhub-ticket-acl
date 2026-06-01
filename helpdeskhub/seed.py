@@ -65,7 +65,7 @@ def reset_and_seed():
             ticket_id="tk-acme-1",
             author_id="akhil",
             visibility="internal",
-            body="INTERNAL_NOTE_X92Z: check auth-service logs for risheel, suspect token expiry bug",
+            body="Customer mentioned login fails after the morning browser update. Will check auth-service logs for the token expiry trace.",
         )
     )
     store.comments.append(
@@ -74,7 +74,7 @@ def reset_and_seed():
             ticket_id="tk-globex-1",
             author_id="diya",
             visibility="internal",
-            body="INTERNAL_NOTE_K44Q: globex export pipeline is hitting rate limit on s3",
+            body="Globex export pipeline is hitting rate limit on the storage backend. Need to bump the per-tenant quota.",
         )
     )
 
@@ -91,6 +91,6 @@ def reset_and_seed():
             id=store.new_id("att"),
             ticket_id="tk-globex-1",
             filename="export-failure.log",
-            content="ERROR: s3 PutObject failed, secret_key=AKIA_GLOBEX_TOPSECRET_X44",
+            content="Globex storage backend returned a quota error trace with internal endpoint URLs and a sensitive request id from the pipeline.",
         )
     )
