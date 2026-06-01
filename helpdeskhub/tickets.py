@@ -8,13 +8,6 @@ from helpdeskhub.models import store, Comment
 router = APIRouter()
 
 
-class TicketPatch(BaseModel):
-    subject: Optional[str] = None
-    body: Optional[str] = None
-    status: Optional[str] = None
-    priority: Optional[str] = None
-
-
 class EscalateBody(BaseModel):
     reason: Optional[str] = None
 
@@ -87,18 +80,13 @@ def list_attachments(ticket_id: str, user=Depends(current_user)):
 
 
 @router.patch("/tickets/{ticket_id}")
-def patch_ticket(ticket_id: str, patch: TicketPatch, user=Depends(current_user)):
+def patch_ticket(ticket_id: str, body: dict, user=Depends(current_user)):
     t = store.tickets.get(ticket_id)
     if t is None:
         raise HTTPException(status_code=404, detail="ticket not found")
-    if patch.subject is not None:
-        t.subject = patch.subject
-    if patch.body is not None:
-        t.body = patch.body
-    if patch.status is not None:
-        t.status = patch.status
-    if patch.priority is not None:
-        t.priority = patch.priority
+    for k, v in body.items():
+        if hasattr(t, k):
+            setattr(t, k, v)
     return _serialize_ticket(t)
 
 
